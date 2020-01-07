@@ -3,22 +3,40 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const Sequelize = require('sequelize');
+  // Option 1: Passing parameters separately
+  const sequelize = new Sequelize('TestDBVidit', 'viditkothari', 'Pa$$w0rd', {
+    host: 'localhost',
+    dialect: 'mssql',
+    dialectOptions: {
+        options: {
+          instanceName: 'SQLTOJSON',
+            encrypt: true,
+            requestTimeout: 30000
+        }
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
+
+
+  sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Hi
     </div>
   );
 }
